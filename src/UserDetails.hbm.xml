@@ -1,0 +1,41 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+"-//Hibernate/Hibernate Mapping DTD//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd"> 
+
+<hibernate-mapping>
+   <class name = "org.example.UserDetails" table = "USERDETAILS">
+      
+      <meta attribute = "class-description">
+         This class contains the user detail. 
+      </meta>
+      
+      <id name = "userId" type = "string" column = "USERID">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "userName" column = "USERNAME" type = "string"/>
+      
+      <set name = "certs" cascade="all">
+         <key column = "userid"/>
+         <one-to-many class="org.example.Certificate"/>
+      </set>
+      
+   </class>
+   
+   
+   <class name = "org.example.Certificate" table = "CERTIFICATE">
+      
+      <meta attribute = "class-description">
+         This class contains the certificate records. 
+      </meta>
+      
+      <id name = "id" type = "int" column = "id">
+         <generator class="native"/>
+      </id>
+      
+      <property name = "name" column = "certificate_name" type = "string"/>
+      
+   </class>
+   
+</hibernate-mapping>

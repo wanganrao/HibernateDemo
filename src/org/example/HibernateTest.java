@@ -1,10 +1,10 @@
 package org.example;
 
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.transaction.Transactional;
+import java.util.Set;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -23,7 +23,13 @@ public class HibernateTest {
 		UserDetails user = new UserDetails();
 		user.setUserId("5");
 		user.setUserName("Fifth User");
-		//addUser(user);
+		
+		HashSet set1 = new HashSet();
+	    set1.add(new Certificate("MCA"));
+	    set1.add(new Certificate("MBA"));
+	    set1.add(new Certificate("PMP"));
+	    user.setCerts(set1);
+		addUser(user);
 		
 		listUsers();
 		
@@ -35,7 +41,7 @@ public class HibernateTest {
 		
 		//listUsers();
 
-		deleteUser("3");
+		//deleteUser("3");
 		
 		listUsers();
 
@@ -86,7 +92,12 @@ public class HibernateTest {
 	         List employees = session.createQuery("FROM UserDetails").list(); 
 	         for (Iterator iterator = employees.iterator(); iterator.hasNext();){
 	            UserDetails employee = (UserDetails) iterator.next(); 
-	            System.out.println("User ID: " + employee.getUserId() + "User Name: " + employee.getUserName()); 
+	            System.out.println("User ID: " + employee.getUserId() + " User Name: " + employee.getUserName());
+	            Set certs = employee.getCerts();
+	            for (Iterator i=certs.iterator(); i.hasNext();) {
+	            	Certificate certificate = (Certificate) i.next();
+	            	System.out.println("\t certificates: "+ certificate.getName());
+	            }
 	         }
 	         tx.commit();
 	      } catch (HibernateException e) {
